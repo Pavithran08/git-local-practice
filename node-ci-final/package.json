@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
   "test": "node test.js",
-  "build": "mkdir -p dist && node app.js > dist/output.txt"
+  "build": "if not exist dist mkdir dist && node app.js > dist/output.txt"
 },
   "keywords": [],
   "author": "",
