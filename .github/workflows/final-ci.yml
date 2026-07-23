@@ -44,8 +44,23 @@ jobs:
         path: node-ci-final/dist
 
 
-  push:
+  docker:
     needs: build
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t node-ci-final ./node-ci-final
+
+    - name: Run Docker container
+      run: docker run node-ci-final
+
+
+  push:
+    needs: docker
     runs-on: self-hosted
 
     steps:
