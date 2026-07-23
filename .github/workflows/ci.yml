@@ -1,0 +1,19 @@
+name: GitHub CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run build test
+        run: |
+          echo "Starting build process..."
+          echo "Project is building successfully!"
