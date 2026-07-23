@@ -12,6 +12,7 @@ jobs:
 
     env:
       APP_ENV: development
+      APP_SECRET: ${{ secrets.APP_SECRET }}
 
     steps:
       - name: Checkout repository
@@ -31,6 +32,11 @@ jobs:
       - name: Install dependencies
         working-directory: node-ci-demo
         run: npm install
+
+      - name: Display secret variable
+        run: |
+           echo "Environment: $APP_ENV"
+           echo "Secret value: $APP_SECRET"
 
       - name: Run build
         working-directory: node-ci-demo
