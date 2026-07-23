@@ -1,0 +1,60 @@
+name: Final CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  test:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: node-ci-final
+
+    - name: Run tests
+      run: npm test
+      working-directory: node-ci-final
+
+
+  build:
+    needs: test
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: node-ci-final
+
+    - name: Build project
+      run: npm run build
+      working-directory: node-ci-final
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-output
+        path: node-ci-final/dist
+
+
+  push:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+
+    - name: Simulate push
+      run: |
+        echo "Artifact ready"
+        ls
